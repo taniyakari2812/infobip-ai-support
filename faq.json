@@ -1,0 +1,14 @@
+[
+  {"q": "What are your opening hours?", "a": "We are open Monday to Saturday, 9 AM to 7 PM. Closed on Sundays."},
+  {"q": "Where is the clinic located?", "a": "CityCare Clinic, 2nd Floor, Main Road, Nashik, near the bus stand."},
+  {"q": "How do I book an appointment?", "a": "Reply with your name, preferred date and time, or call 0253-000000. Booking is free."},
+  {"q": "How can I cancel or reschedule my appointment?", "a": "Reply RESCHEDULE with your new preferred time at least 2 hours before your appointment."},
+  {"q": "What is the consultation fee?", "a": "General consultation is Rs 300. Specialist consultation is Rs 600."},
+  {"q": "Do you accept insurance?", "a": "Yes, we accept most major health insurance plans. Please carry your insurance card."},
+  {"q": "Do you offer blood tests?", "a": "Yes, our lab is open 8 AM to 12 PM. Reports are ready within 24 hours."},
+  {"q": "How do I get my reports?", "a": "Reports are sent by SMS link once ready, or you can collect them at the front desk."},
+  {"q": "Is parking available?", "a": "Yes, free parking is available behind the building."},
+  {"q": "Do you provide online consultation?", "a": "Yes, video consultation is available for Rs 400. Book it the same way as a normal appointment."},
+  {"q": "What documents should I bring?", "a": "Bring a photo ID, previous prescriptions and reports, and your insurance card if you have one."},
+  {"q": "Which doctors are available?", "a": "We have a general physician, a pediatrician and a dermatologist. Specialist days vary, so please ask when booking."}
+]

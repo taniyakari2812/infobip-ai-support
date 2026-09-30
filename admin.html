@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin - AI Support Assistant</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f1f5f9; color: #0f172a; }
+  header { background: #1e293b; color: #fff; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; }
+  header h1 { font-size: 18px; margin: 0; }
+  header a { color: #cbd5e1; font-size: 14px; text-decoration: none; }
+  main { max-width: 960px; margin: 20px auto; padding: 0 12px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .stat { background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+  .stat b { display: block; font-size: 28px; margin-top: 4px; }
+  .wrap { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.08); overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+  th { background: #f8fafc; }
+  .yes { color: #b45309; font-weight: bold; }
+  .no { color: #15803d; }
+  button { margin: 0 0 12px; padding: 8px 14px; border: 0; border-radius: 8px; background: #1e293b; color: #fff; cursor: pointer; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Admin dashboard</h1>
+  <a href="/">Back to chat</a>
+</header>
+<main>
+  <button onclick="load()">Refresh</button>
+  <div class="stats">
+    <div class="stat">Total conversations<b id="total">-</b></div>
+    <div class="stat">Handed off to human<b id="handoffs">-</b></div>
+    <div class="stat">Handoff rate<b id="rate">-</b></div>
+    <div class="stat">Avg response time<b id="latency">-</b></div>
+  </div>
+  <div class="wrap">
+    <table>
+      <thead><tr><th>Time</th><th>Customer message</th><th>Reply</th><th>Handoff</th><th>ms</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</main>
+<script>
+  async function load() {
+    const res = await fetch("/logs?limit=100");
+    const data = await res.json();
+    const s = data.stats;
+    document.getElementById("total").textContent = s.total;
+    document.getElementById("handoffs").textContent = s.handoffs;
+    document.getElementById("rate").textContent = s.total ? Math.round((s.handoffs / s.total) * 100) + "%" : "0%";
+    document.getElementById("latency").textContent = s.avg_latency_ms + " ms";
+    const rows = document.getElementById("rows");
+    rows.innerHTML = "";
+    data.conversations.forEach((c) => {
+      const tr = document.createElement("tr");
+      const cells = [c.time, c.message, c.reply, c.handoff ? "Yes" : "No", c.latency_ms];
+      cells.forEach((val, i) => {
+        const td = document.createElement("td");
+        td.textContent = val;
+        if (i === 3) td.className = c.handoff ? "yes" : "no";
+        tr.appendChild(td);
+      });
+      rows.appendChild(tr);
+    });
+  }
+  load();
+</script>
+</body>
+</html>
